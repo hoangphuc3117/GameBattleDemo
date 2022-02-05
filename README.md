@@ -1,6 +1,6 @@
 # GameBattleDemo
 + This is a simple demo for a battle game (PVE) using smartfoxserver.<br/>
-+ A Room on Smartfoxserver is looked as a battle.The player joined and the battle will happen
++ A Room on Smartfoxserver is looked as a battle.The player joined and the battle will process
 + There are 2 teams (Team A & Team B) with hardcode the army.<br/>
 + The army has 3 characters such as Heal, Strength, Shield.<br/>
 + Logic for calculating the heal of an army -> Heal = Heal - (strength - shield)<br/>
