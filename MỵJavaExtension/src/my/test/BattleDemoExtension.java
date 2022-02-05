@@ -109,31 +109,31 @@ public class BattleDemoExtension extends SFSExtension {
 		return false;
 	}
 
-	// team 1: attacker, team 2: attacked
+	// team 1: attacker, team 2: victim
 	private void teamAttacks(List<ArmyModel> team1, List<ArmyModel> team2) {
 		for (int i = 0; i < team1.size(); i++) {
-			if (teamA.get(i).getHeal() > 0) {
+			if (team1.get(i).getHeal() > 0) {
 				for (int j = 0; j < team2.size(); j++) {
 					if (team1.get(j).getHeal() > 0) {
 						ArmyModel attacker = team1.get(i);
-						ArmyModel attacked = team2.get(j);
+						ArmyModel victim = team2.get(j);
 
 						int attackerStrong = attacker.getStrong();
 
-						int attackedShield = attacked.getShield();
-						int attackedHeal = attacked.getHeal();
-						attacked.setHeal(attackedHeal - (attackerStrong - attackedShield));
+						int victimShield = victim.getShield();
+						int victimHeal = victim.getHeal();
+						victim.setHeal(victimHeal - (attackerStrong - victimShield));
 
 						// Log attack result
-						trace("Attacker = " + attacker.getName() + " , Strength = " + attackerStrong + " | Attcacked = "
-								+ attacked.getName() + ", heal = " + attackedHeal + ", shield = " + attackedShield
-								+ ", new Heal = " + attacked.getHeal());
+						trace("Attacker = " + attacker.getName() + " , Strength = " + attackerStrong + " | Victim = "
+								+ victim.getName() + ", heal = " + victimHeal + ", shield = " + victimShield
+								+ ", new Heal = " + victim.getHeal());
 
 						// Send to client for attack result
 						SFSObject sfsObj = new SFSObject();
 						sfsObj.putInt(Constants.ATTACKER_ID, attacker.getId());
-						sfsObj.putInt(Constants.ATTACKED_ID, attacked.getId());
-						sfsObj.putInt(Constants.ATTACKED_NEW_HEAL, attacked.getHeal());
+						sfsObj.putInt(Constants.ATTACKED_ID, victim.getId());
+						sfsObj.putInt(Constants.ATTACKED_NEW_HEAL, victim.getHeal());
 						if (whoseTurn == 0) {
 							send(Commands.CMD_PLAYER_ATTACK, sfsObj, player1);
 						} else {
@@ -205,9 +205,9 @@ public class BattleDemoExtension extends SFSExtension {
 		demon3.setStrong(30);
 		demon3.setShield(20);
 
-		teamB.add(army1);
-		teamB.add(army2);
-		teamB.add(army3);
+		teamB.add(demon1);
+		teamB.add(demon2);
+		teamB.add(demon3);
 
 		ISFSObject respObj = new SFSObject();
 		Gson gson = new Gson();
