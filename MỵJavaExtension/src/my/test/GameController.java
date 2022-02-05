@@ -15,6 +15,7 @@ public class GameController extends Thread {
 	/** Continue flag */
 	private boolean battleRunning = true;
 
+	/** Timer for waiting the player */
 	private boolean startTimer = false;
 
 	private Timer timer = null;
@@ -40,7 +41,7 @@ public class GameController extends Thread {
 				sfsObj.putInt(Constants.BATTLE_TURN, this.extension.getTurn());
 				this.extension.send(Commands.CMD_NEXT_TURN, sfsObj, this.extension.getPlayer1());
 
-				// Player
+				// The Player (Team A) attacks
 				this.extension.teamAAttacks();
 				if (!this.extension.checkBattleEnd()) {
 					this.extension.setWhoseTurn(1);
@@ -52,7 +53,7 @@ public class GameController extends Thread {
 				}
 				break;
 			case 1:
-				// Computer
+				// Computer (Team B) attacks
 				this.extension.teamBAttacks();
 				this.extension.setWhoseTurn(-1);
 				logCompleteTurn();
@@ -80,14 +81,11 @@ public class GameController extends Thread {
 			if (timer == null) {
 				timer = new Timer();
 			}
-			this.extension.trace("Start Timer");
 			startTimer = true;
 			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					GameController.this.extension.trace("Timer startTimer = " + startTimer);
 					if (startTimer) {
-						GameController.this.extension.trace("Trigger next step");
 						startTimer = false;
 						GameController.this.extension.setWhoseTurn(0);
 					}
@@ -103,9 +101,8 @@ public class GameController extends Thread {
 
 	private void cancelTimer() {
 		if (startTimer) {
-			this.extension.trace("Cancel Timer");
 			if (timer != null) {
-//				timer.cancel();
+				// timer.cancel();
 			}
 			startTimer = false;
 		}
